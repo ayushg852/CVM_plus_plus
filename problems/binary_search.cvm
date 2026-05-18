@@ -1,0 +1,46 @@
+// Binary Search with User Input in CVM++
+
+display("Enter the number of elements: ");
+integer n = enter();
+
+// Initialize array with size n
+array arr = array(n);
+
+displayln("Enter the elements (MUST BE SORTED for Binary Search):");
+for(integer i from 0 to n - 1) {
+    display("Element "); display(i); display(": ");
+    arr[i] = enter();
+}
+
+displayln("Your array: ");
+displayln(arr);
+
+display("Enter the target value to search for: ");
+integer target = enter();
+
+integer low = 0;
+integer high = n - 1;
+integer foundIndex = -1;
+
+during(low <= high) {
+    integer mid = (low + high) / 2;
+    integer midVal = arr[mid];
+    
+    if (midVal == target) {
+        foundIndex = mid;
+        low = high + 1; // Exit loop
+    } else {
+        if (midVal < target) {
+            low = mid + 1;
+        } else {
+            high = mid - 1;
+        }
+    }
+}
+
+if (foundIndex != -1) {
+    display("Target found at index: ");
+    displayln(foundIndex);
+} else {
+    displayln("Target not found in the array.");
+}

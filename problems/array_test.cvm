@@ -1,0 +1,25 @@
+// Array test
+array arr = [1, 2, 3];
+displayln("Initial array:");
+displayln(arr);
+
+arr[1] = 10;
+displayln("After arr[1] = 10:");
+displayln(arr);
+
+// Binary Search with user input
+displayln("Enter number of elements in array:");
+integer n = enter();
+
+array data = []; // We need a way to build array dynamically or pre-size it
+// Currently we don't have data.push() or array(size)
+// Let's implement a way to build it from input
+
+displayln("Enter elements (one by one):");
+for(integer i from 0 to n - 1) {
+    display("Element "); display(i); display(": ");
+    integer val = enter();
+    // We can't push to data yet, so let's use a trick or implement it.
+    // For now, I will implement a way to build it using a list literal
+    // but that's hard for user input.
+}
