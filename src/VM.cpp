@@ -90,33 +90,68 @@ InterpretResult VM::run() {
             }
             case OpCode::ADD: {
                 Value b = pop(); Value a = pop();
-                if (std::holds_alternative<int>(a) && std::holds_alternative<int>(b)) push(std::get<int>(a) + std::get<int>(b));
-                else if (std::holds_alternative<double>(a) && std::holds_alternative<double>(b)) push(std::get<double>(a) + std::get<double>(b));
-                else if (std::holds_alternative<std::string>(a) && std::holds_alternative<std::string>(b)) push(std::get<std::string>(a) + std::get<std::string>(b));
-                else if (std::holds_alternative<std::string>(a) && std::holds_alternative<char>(b)) push(std::get<std::string>(a) + std::get<char>(b));
-                else if (std::holds_alternative<char>(a) && std::holds_alternative<std::string>(b)) push(std::get<char>(a) + std::get<std::string>(b));
-                else { runtimeError("Invalid add operands."); return InterpretResult::RUNTIME_ERROR; }
+                if (std::holds_alternative<int>(a) && std::holds_alternative<int>(b)) {
+                    push(std::get<int>(a) + std::get<int>(b));
+                } else if ((std::holds_alternative<int>(a) || std::holds_alternative<double>(a)) && 
+                           (std::holds_alternative<int>(b) || std::holds_alternative<double>(b))) {
+                    double va = std::holds_alternative<int>(a) ? (double)std::get<int>(a) : std::get<double>(a);
+                    double vb = std::holds_alternative<int>(b) ? (double)std::get<int>(b) : std::get<double>(b);
+                    push(va + vb);
+                } else if (std::holds_alternative<std::string>(a) && std::holds_alternative<std::string>(b)) {
+                    push(std::get<std::string>(a) + std::get<std::string>(b));
+                } else if (std::holds_alternative<std::string>(a) && std::holds_alternative<char>(b)) {
+                    push(std::get<std::string>(a) + std::get<char>(b));
+                } else if (std::holds_alternative<char>(a) && std::holds_alternative<std::string>(b)) {
+                    push(std::get<char>(a) + std::get<std::string>(b));
+                } else {
+                    runtimeError("Invalid add operands.");
+                    return InterpretResult::RUNTIME_ERROR;
+                }
                 break;
             }
             case OpCode::SUBTRACT: {
                 Value b = pop(); Value a = pop();
-                if (std::holds_alternative<int>(a) && std::holds_alternative<int>(b)) push(std::get<int>(a) - std::get<int>(b));
-                else if (std::holds_alternative<double>(a) && std::holds_alternative<double>(b)) push(std::get<double>(a) - std::get<double>(b));
-                else { runtimeError("Invalid sub operands."); return InterpretResult::RUNTIME_ERROR; }
+                if (std::holds_alternative<int>(a) && std::holds_alternative<int>(b)) {
+                    push(std::get<int>(a) - std::get<int>(b));
+                } else if ((std::holds_alternative<int>(a) || std::holds_alternative<double>(a)) && 
+                           (std::holds_alternative<int>(b) || std::holds_alternative<double>(b))) {
+                    double va = std::holds_alternative<int>(a) ? (double)std::get<int>(a) : std::get<double>(a);
+                    double vb = std::holds_alternative<int>(b) ? (double)std::get<int>(b) : std::get<double>(b);
+                    push(va - vb);
+                } else {
+                    runtimeError("Invalid sub operands.");
+                    return InterpretResult::RUNTIME_ERROR;
+                }
                 break;
             }
             case OpCode::MULTIPLY: {
                 Value b = pop(); Value a = pop();
-                if (std::holds_alternative<int>(a) && std::holds_alternative<int>(b)) push(std::get<int>(a) * std::get<int>(b));
-                else if (std::holds_alternative<double>(a) && std::holds_alternative<double>(b)) push(std::get<double>(a) * std::get<double>(b));
-                else { runtimeError("Invalid mul operands."); return InterpretResult::RUNTIME_ERROR; }
+                if (std::holds_alternative<int>(a) && std::holds_alternative<int>(b)) {
+                    push(std::get<int>(a) * std::get<int>(b));
+                } else if ((std::holds_alternative<int>(a) || std::holds_alternative<double>(a)) && 
+                           (std::holds_alternative<int>(b) || std::holds_alternative<double>(b))) {
+                    double va = std::holds_alternative<int>(a) ? (double)std::get<int>(a) : std::get<double>(a);
+                    double vb = std::holds_alternative<int>(b) ? (double)std::get<int>(b) : std::get<double>(b);
+                    push(va * vb);
+                } else {
+                    runtimeError("Invalid mul operands.");
+                    return InterpretResult::RUNTIME_ERROR;
+                }
                 break;
             }
             case OpCode::DIVIDE: {
                 Value b = pop(); Value a = pop();
-                if (std::holds_alternative<int>(a) && std::holds_alternative<int>(b)) push(std::get<int>(a) / std::get<int>(b));
-                else if (std::holds_alternative<double>(a) && std::holds_alternative<double>(b)) push(std::get<double>(a) / std::get<double>(b));
-                else { runtimeError("Invalid div operands."); return InterpretResult::RUNTIME_ERROR; }
+                if (std::holds_alternative<int>(a) && std::holds_alternative<int>(b)) {
+                    push(std::get<int>(a) / std::get<int>(b));
+                } else if ((std::holds_alternative<int>(a) || std::holds_alternative<double>(a)) && 
+                           (std::holds_alternative<int>(b) || std::holds_alternative<double>(b))) {
+                    double va = std::holds_alternative<int>(a) ? (double)std::get<int>(a) : std::get<double>(a);
+                    double vb = std::holds_alternative<int>(b) ? (double)std::get<int>(b) : std::get<double>(b);
+                    push(va / vb);
+                } else {
+                    runtimeError("Invalid div operands.");
+                    return InterpretResult::RUNTIME_ERROR;
+                }
                 break;
             }
             case OpCode::MODULO: {
@@ -136,30 +171,62 @@ InterpretResult VM::run() {
             case OpCode::NOT_EQUAL: { Value b = pop(); Value a = pop(); push(!(a == b)); break; }
             case OpCode::LESS: {
                 Value b = pop(); Value a = pop();
-                if (std::holds_alternative<int>(a) && std::holds_alternative<int>(b)) push(std::get<int>(a) < std::get<int>(b));
-                else if (std::holds_alternative<double>(a) && std::holds_alternative<double>(b)) push(std::get<double>(a) < std::get<double>(b));
-                else { runtimeError("Invalid < operands."); return InterpretResult::RUNTIME_ERROR; }
+                if (std::holds_alternative<int>(a) && std::holds_alternative<int>(b)) {
+                    push(std::get<int>(a) < std::get<int>(b));
+                } else if ((std::holds_alternative<int>(a) || std::holds_alternative<double>(a)) && 
+                           (std::holds_alternative<int>(b) || std::holds_alternative<double>(b))) {
+                    double va = std::holds_alternative<int>(a) ? (double)std::get<int>(a) : std::get<double>(a);
+                    double vb = std::holds_alternative<int>(b) ? (double)std::get<int>(b) : std::get<double>(b);
+                    push(va < vb);
+                } else {
+                    runtimeError("Invalid < operands.");
+                    return InterpretResult::RUNTIME_ERROR;
+                }
                 break;
             }
             case OpCode::LESS_EQUAL: {
                 Value b = pop(); Value a = pop();
-                if (std::holds_alternative<int>(a) && std::holds_alternative<int>(b)) push(std::get<int>(a) <= std::get<int>(b));
-                else if (std::holds_alternative<double>(a) && std::holds_alternative<double>(b)) push(std::get<double>(a) <= std::get<double>(b));
-                else { runtimeError("Invalid <= operands."); return InterpretResult::RUNTIME_ERROR; }
+                if (std::holds_alternative<int>(a) && std::holds_alternative<int>(b)) {
+                    push(std::get<int>(a) <= std::get<int>(b));
+                } else if ((std::holds_alternative<int>(a) || std::holds_alternative<double>(a)) && 
+                           (std::holds_alternative<int>(b) || std::holds_alternative<double>(b))) {
+                    double va = std::holds_alternative<int>(a) ? (double)std::get<int>(a) : std::get<double>(a);
+                    double vb = std::holds_alternative<int>(b) ? (double)std::get<int>(b) : std::get<double>(b);
+                    push(va <= vb);
+                } else {
+                    runtimeError("Invalid <= operands.");
+                    return InterpretResult::RUNTIME_ERROR;
+                }
                 break;
             }
             case OpCode::GREATER: {
                 Value b = pop(); Value a = pop();
-                if (std::holds_alternative<int>(a) && std::holds_alternative<int>(b)) push(std::get<int>(a) > std::get<int>(b));
-                else if (std::holds_alternative<double>(a) && std::holds_alternative<double>(b)) push(std::get<double>(a) > std::get<double>(b));
-                else { runtimeError("Invalid > operands."); return InterpretResult::RUNTIME_ERROR; }
+                if (std::holds_alternative<int>(a) && std::holds_alternative<int>(b)) {
+                    push(std::get<int>(a) > std::get<int>(b));
+                } else if ((std::holds_alternative<int>(a) || std::holds_alternative<double>(a)) && 
+                           (std::holds_alternative<int>(b) || std::holds_alternative<double>(b))) {
+                    double va = std::holds_alternative<int>(a) ? (double)std::get<int>(a) : std::get<double>(a);
+                    double vb = std::holds_alternative<int>(b) ? (double)std::get<int>(b) : std::get<double>(b);
+                    push(va > vb);
+                } else {
+                    runtimeError("Invalid > operands.");
+                    return InterpretResult::RUNTIME_ERROR;
+                }
                 break;
             }
             case OpCode::GREATER_EQUAL: {
                 Value b = pop(); Value a = pop();
-                if (std::holds_alternative<int>(a) && std::holds_alternative<int>(b)) push(std::get<int>(a) >= std::get<int>(b));
-                else if (std::holds_alternative<double>(a) && std::holds_alternative<double>(b)) push(std::get<double>(a) >= std::get<double>(b));
-                else { runtimeError("Invalid >= operands."); return InterpretResult::RUNTIME_ERROR; }
+                if (std::holds_alternative<int>(a) && std::holds_alternative<int>(b)) {
+                    push(std::get<int>(a) >= std::get<int>(b));
+                } else if ((std::holds_alternative<int>(a) || std::holds_alternative<double>(a)) && 
+                           (std::holds_alternative<int>(b) || std::holds_alternative<double>(b))) {
+                    double va = std::holds_alternative<int>(a) ? (double)std::get<int>(a) : std::get<double>(a);
+                    double vb = std::holds_alternative<int>(b) ? (double)std::get<int>(b) : std::get<double>(b);
+                    push(va >= vb);
+                } else {
+                    runtimeError("Invalid >= operands.");
+                    return InterpretResult::RUNTIME_ERROR;
+                }
                 break;
             }
             case OpCode::AND: { Value b = pop(); Value a = pop(); push(std::get<bool>(a) && std::get<bool>(b)); break; }
@@ -265,7 +332,22 @@ InterpretResult VM::run() {
                 std::cout << std::endl;
                 break;
             }
-            case OpCode::ENTER: { std::string input; std::getline(std::cin, input); try { push(std::stoi(input)); } catch(...) { push(input); } break; }
+            case OpCode::ENTER: { 
+                std::string input; 
+                std::getline(std::cin, input); 
+                try {
+                    size_t pos;
+                    int i = std::stoi(input, &pos);
+                    if (pos == input.length()) { push(i); break; }
+                } catch(...) {}
+                try {
+                    size_t pos;
+                    double d = std::stod(input, &pos);
+                    if (pos == input.length()) { push(d); break; }
+                } catch(...) {}
+                push(input); 
+                break; 
+            }
             case OpCode::HALT: return InterpretResult::OK;
             default: runtimeError("Unknown opcode."); return InterpretResult::RUNTIME_ERROR;
         }

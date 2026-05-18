@@ -47,6 +47,10 @@ private:
         std::cout << "StringLiteral: \"" << node.value << "\"";
     }
 
+    void visitCharLiteral(CharLiteral& node) override {
+        std::cout << "CharLiteral: '" << node.value << "'";
+    }
+
     void visitBoolLiteral(BoolLiteral& node) override {
         std::cout << "BoolLiteral: " << (node.value ? "true" : "false");
     }

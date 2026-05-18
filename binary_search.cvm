@@ -1,5 +1,3 @@
-// Binary Search with User Input in CVM++
-
 display("Enter the number of elements: ");
 integer n = enter();
 
@@ -8,7 +6,6 @@ array arr = array(n);
 
 displayln("Enter the elements (MUST BE SORTED for Binary Search):");
 for(integer i from 0 to n - 1) {
-    display("Element "); display(i); display(": ");
     arr[i] = enter();
 }
 
@@ -29,7 +26,8 @@ during(low <= high) {
     if (midVal == target) {
         foundIndex = mid;
         low = high + 1; // Exit loop
-    } else {
+    } 
+    else {
         if (midVal < target) {
             low = mid + 1;
         } else {

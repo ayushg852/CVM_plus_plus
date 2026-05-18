@@ -1,0 +1,35 @@
+/* String Operations Demo */
+
+displayln("--- String Literal ---");
+string s = "Hello World";
+display("Initial string: ");
+displayln(s);
+
+displayln("--- Size Function ---");
+display("String length: ");
+displayln(size(s));
+
+displayln("--- Character Indexing (Read) ---");
+display("Char at index 0: ");
+displayln(s[0]);
+display("Char at index 6: ");
+displayln(s[6]);
+
+displayln("--- String Mutation (Write Character) ---");
+s[0] = "h";
+display("After s[0] = 'h': ");
+displayln(s);
+
+displayln("--- Concatenation (+) ---");
+string firstName = "Ayush";
+string lastName = " Gupta";
+string fullName = firstName + " " + lastName;
+displayln("Concatenated: " + fullName);
+
+displayln("--- String Input ---");
+displayln("Please enter a custom string:");
+string input = enter();
+display("You entered: ");
+displayln(input);
+display("Length of your input: ");
+displayln(size(input));

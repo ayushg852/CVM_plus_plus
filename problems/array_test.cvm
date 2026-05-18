@@ -1,4 +1,0 @@
-let a=10;
-displayln(a);
-a=a+1;
-displayln(a);

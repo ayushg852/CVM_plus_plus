@@ -4,6 +4,7 @@ integer factorial(integer n) {
     }
     return n * factorial(n - 1);
 }
+displayln("Enter the number ");
 integer n=enter();
 display("Factorial is : ");
 displayln(factorial(n));

@@ -40,6 +40,13 @@ public:
     void accept(Visitor& visitor) override;
 };
 
+class CharLiteral : public Expr {
+public:
+    char value;
+    CharLiteral(char val) : value(val) {}
+    void accept(Visitor& visitor) override;
+};
+
 class BoolLiteral : public Expr {
 public:
     bool value;
@@ -197,6 +204,7 @@ public:
     virtual void visitIntLiteral(IntLiteral& node) = 0;
     virtual void visitDecimalLiteral(DecimalLiteral& node) = 0;
     virtual void visitStringLiteral(StringLiteral& node) = 0;
+    virtual void visitCharLiteral(CharLiteral& node) = 0;
     virtual void visitBoolLiteral(BoolLiteral& node) = 0;
     virtual void visitVariableExpr(VariableExpr& node) = 0;
     virtual void visitBinaryExpr(BinaryExpr& node) = 0;
@@ -219,9 +227,11 @@ public:
 inline void IntLiteral::accept(Visitor& v) { v.visitIntLiteral(*this); }
 inline void DecimalLiteral::accept(Visitor& v) { v.visitDecimalLiteral(*this); }
 inline void StringLiteral::accept(Visitor& v) { v.visitStringLiteral(*this); }
+inline void CharLiteral::accept(Visitor& v) { v.visitCharLiteral(*this); }
 inline void BoolLiteral::accept(Visitor& v) { v.visitBoolLiteral(*this); }
 inline void VariableExpr::accept(Visitor& v) { v.visitVariableExpr(*this); }
 inline void BinaryExpr::accept(Visitor& v) { v.visitBinaryExpr(*this); }
+inline void UnaryExpr::advance(Visitor& v) { } // Not needed, accept is virtual
 inline void UnaryExpr::accept(Visitor& v) { v.visitUnaryExpr(*this); }
 inline void CallExpr::accept(Visitor& v) { v.visitCallExpr(*this); }
 inline void ArrayLiteral::accept(Visitor& v) { v.visitArrayLiteral(*this); }

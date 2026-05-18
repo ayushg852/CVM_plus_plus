@@ -18,6 +18,7 @@ public:
     void visitIntLiteral(AST::IntLiteral& node) override;
     void visitDecimalLiteral(AST::DecimalLiteral& node) override;
     void visitStringLiteral(AST::StringLiteral& node) override;
+    void visitCharLiteral(AST::CharLiteral& node) override;
     void visitBoolLiteral(AST::BoolLiteral& node) override;
     void visitVariableExpr(AST::VariableExpr& node) override;
     void visitBinaryExpr(AST::BinaryExpr& node) override;

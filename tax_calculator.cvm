@@ -1,0 +1,16 @@
+/* Calculates the yearly tax paid by a person and net yearly income
+   given his monthly salary and interest rate */
+
+displayln ("Enter Monthly salary");
+decimal salary=enter();
+displayln ("Enter Interest Rate");
+decimal rate=enter();
+
+decimal yearly_salary = salary * 12.0;
+decimal tax = rate * yearly_salary / 100.0;
+decimal yearly_net_salary = yearly_salary - tax;
+
+display ( "Yearly Tax paid is : " );
+displayln(tax);
+display ( "Yearly Net Salary is : " );
+displayln(yearly_net_salary);

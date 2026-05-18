@@ -66,6 +66,11 @@ void Compiler::visitStringLiteral(AST::StringLiteral& node) {
     lastExprType = TokenType::STRING;
 }
 
+void Compiler::visitCharLiteral(AST::CharLiteral& node) {
+    emitConstant(node.value);
+    lastExprType = TokenType::CHARACTER;
+}
+
 void Compiler::visitBoolLiteral(AST::BoolLiteral& node) {
     emitConstant(node.value);
     lastExprType = TokenType::BOOLEAN;
