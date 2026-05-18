@@ -15,11 +15,6 @@ displayln(s[0]);
 display("Char at index 6: ");
 displayln(s[6]);
 
-displayln("--- String Mutation (Write Character) ---");
-s[0] = "h";
-display("After s[0] = 'h': ");
-displayln(s);
-
 displayln("--- Concatenation (+) ---");
 string firstName = "Ayush";
 string lastName = " Gupta";

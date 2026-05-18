@@ -231,7 +231,6 @@ inline void CharLiteral::accept(Visitor& v) { v.visitCharLiteral(*this); }
 inline void BoolLiteral::accept(Visitor& v) { v.visitBoolLiteral(*this); }
 inline void VariableExpr::accept(Visitor& v) { v.visitVariableExpr(*this); }
 inline void BinaryExpr::accept(Visitor& v) { v.visitBinaryExpr(*this); }
-inline void UnaryExpr::advance(Visitor& v) { } // Not needed, accept is virtual
 inline void UnaryExpr::accept(Visitor& v) { v.visitUnaryExpr(*this); }
 inline void CallExpr::accept(Visitor& v) { v.visitCallExpr(*this); }
 inline void ArrayLiteral::accept(Visitor& v) { v.visitArrayLiteral(*this); }
